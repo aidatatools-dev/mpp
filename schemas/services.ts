@@ -78,13 +78,15 @@ export const STRIPE_PAYMENT: PaymentDefaults = {
 };
 
 export interface EndpointDef {
-  /** Safe, unauthenticated probe fixture. Required for POST or parameterized routes. */
-  healthCheck?: {
-    /** Concrete route path, including any query parameters, relative to serviceUrl. */
-    path?: string;
-    /** JSON body for a POST that is safe to repeat without payment or credentials. */
-    body?: Record<string, unknown>;
-  };
+  /** Safe, unauthenticated fixture. Set false for routes that must never be probed. */
+  healthCheck?:
+    | false
+    | {
+        /** Concrete route path, including any query parameters, relative to serviceUrl. */
+        path?: string;
+        /** JSON body for a POST that is safe to repeat without payment or credentials. */
+        body?: Record<string, unknown>;
+      };
   /** Route string: "METHOD /path" (without service slug prefix) */
   route: string;
   /** Description of what this endpoint does */
@@ -170,42 +172,49 @@ export const services: ServiceDef[] = [
     ],
     endpoints: [
       {
+        healthCheck: false,
         route: "GET /get-card",
         desc: "Order a US prepaid card",
         dynamic: true,
         amountHint: "$5 to $1,000 card value",
       },
       {
+        healthCheck: false,
         route: "GET /order-intl-card",
         desc: "Order an international prepaid card",
         dynamic: true,
         amountHint: "$103.80 to $1,038 including fees",
       },
       {
+        healthCheck: false,
         route: "GET /fund-card-balance",
         desc: "Load a reloadable card balance",
         dynamic: true,
         amountHint: "$5 to $1,000",
       },
       {
+        healthCheck: false,
         route: "GET /order-gift-card",
         desc: "Order a gift card",
         dynamic: true,
         amountHint: "$5 to $9,432 depending on brand and value",
       },
       {
+        healthCheck: false,
         route: "GET /get-push-to-card",
         desc: "Send money to a debit card (USD, EUR, GBP)",
         dynamic: true,
         amountHint: "$11.50 to $10,000 including fees",
       },
       {
+        healthCheck: false,
         route: "GET /send-payment",
         desc: "Send a Venmo or PayPal payment",
         dynamic: true,
         amountHint: "$6.50 to $1,049 including fees",
       },
       {
+        healthCheck: false,
         route: "GET /send-bank-payment",
         desc: "Send dollars to a bank account",
         dynamic: true,
@@ -3758,6 +3767,7 @@ export const services: ServiceDef[] = [
     payments: [STRIPE_PAYMENT],
     endpoints: [
       {
+        healthCheck: false,
         route: "GET /buy/:slug",
         desc: "Purchase a sandwich",
         dynamic: true,

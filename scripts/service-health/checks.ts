@@ -100,12 +100,16 @@ export interface MppProbe extends Probe {
 export function mppProbes(service: ServiceDef): MppProbe[] {
   return service.endpoints.map((endpoint) => {
     const [method, path] = endpoint.route.split(" ");
-    const fixture = endpoint.healthCheck;
+    const fixture = endpoint.healthCheck || undefined;
     const concretePath = fixture?.path ?? path;
     const paid =
       endpoint.dynamic ||
       (endpoint.amount !== undefined && BigInt(endpoint.amount) > 0n);
-    let skip = inactiveReason(service);
+    let skip =
+      inactiveReason(service) ??
+      (endpoint.healthCheck === false
+        ? "Endpoint explicitly excluded from health probes"
+        : undefined);
     if (
       !skip &&
       !["GET", "HEAD"].includes(method) &&

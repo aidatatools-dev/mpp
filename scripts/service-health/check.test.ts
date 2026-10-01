@@ -127,6 +127,26 @@ describe("planning", () => {
   });
 });
 
+describe("probe exclusions", () => {
+  it("excludes side-effectful GET routes even when their paths are concrete", () => {
+    const planned = mppProbes({
+      ...service,
+      endpoints: [
+        { route: "GET /purchase", desc: "Purchase", healthCheck: false },
+      ],
+    });
+    expect(planned[0].skip).toBe(
+      "Endpoint explicitly excluded from health probes",
+    );
+  });
+  it("excludes the catalog's card, payout, and purchase routes", () => {
+    for (const id of ["laso-finance", "prospect-butcher"]) {
+      const entry = services.find((service) => service.id === id)!;
+      expect(mppProbes(entry).filter((probe) => !probe.skip)).toEqual([]);
+    }
+  });
+});
+
 describe("classification", () => {
   it.each([
     { request: {} },
