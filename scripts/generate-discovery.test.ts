@@ -339,6 +339,9 @@ describe("service registry integrity", () => {
         docs: "https://parallelmpp.dev/#responses",
       },
       {
+        healthCheck: {
+          body: { mode: "one-shot", query: "Machine Payments Protocol" },
+        },
         route: "POST /api/search",
         desc: "Search the web",
         amount: "10000",
