@@ -10801,8 +10801,8 @@ export const services: ServiceDef[] = [
   {
     id: "astro-agents",
     name: "Astro Agents",
-    url: "https://astro-agents-api.vercel.app",
-    serviceUrl: "https://astro-agents-api.vercel.app",
+    url: "https://astro-agent.dev",
+    serviceUrl: "https://astro-agent.dev",
     description:
       "Deterministic Western and Vedic astrology for agents: natal charts, transits, synastry, kundli, divisional charts, dashas, panchang and Gun Milan from NASA/JPL DE440, no LLM, SHA-256 verifiable results.",
     categories: ["data", "ai"],
@@ -10820,12 +10820,15 @@ export const services: ServiceDef[] = [
     ],
     status: "active",
     docs: {
-      homepage: "https://astro-agents-api.vercel.app",
-      llmsTxt: "https://astro-agents-api.vercel.app/llms.txt",
-      apiReference: "https://astro-agents-api.vercel.app/openapi.json",
+      homepage: "https://astro-agent.dev",
+      llmsTxt: "https://astro-agent.dev/llms.txt",
+      apiReference: "https://astro-agent.dev/openapi.json",
     },
-    provider: { name: "aidatatools", url: "https://github.com/aidatatools-dev/astro-agents-mcp" },
-    realm: "astro-agents-api.vercel.app",
+    provider: {
+      name: "aidatatools",
+      url: "https://github.com/aidatatools-dev/astro-agents-mcp",
+    },
+    realm: "astro-agent.dev",
     intent: "charge",
     payments: [TEMPO_PAYMENT],
     endpoints: [
